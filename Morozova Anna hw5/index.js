@@ -82,30 +82,33 @@ Drink.COFFEE = {name: 'Coffee', price: 80, calories: 20};
 
 
 function Order() {
-  this.items = Array.prototype.slice.call(arguments);
+  this.items = [];
+  for(var i = 0; arguments.length > i; i++) {
+    this.items.push(arguments[i]);
+  }
 } 
 
 Order.prototype.totalOrder = function() {
   var order = [];
-  this.items.forEach(function(item) {
-    order.push(item.getName());
-  });
+  for(var i = 0; this.items.length > i; i++) {
+    order.push(this.items[i].getName());
+  }
   return order.join(', ');
 }
 
 Order.prototype.totalPrice = function() {
   var price = 0;
-  this.items.forEach(function(item) {
-    price += item.calculatePrice();
-  });
+  for(var i = 0; this.items.length > i; i++) {
+    price += this.items[i].calculatePrice();
+  }
   return price;
 }
 
 Order.prototype.totalCalories = function() {
   var calories = 0;
-  this.items.forEach(function(item) {
-    calories += item.calculateCalories();
-  });
+  for(var i = 0; this.items.length > i; i++) {
+    calories += this.items[i].calculateCalories();
+  }
   return calories;
 }
 
