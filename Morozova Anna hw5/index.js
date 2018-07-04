@@ -7,18 +7,15 @@ Product.prototype.getType = function() {
 }
  
 Product.prototype.getName = function() {
-  this.name = this.getType().name;
-  return this.name;
+  return this.getType().name;
 }
 
 Product.prototype.calculatePrice = function() {
-  var price = this.getType().price;
-  return price;
+  return this.getType().price;
 }
 
 Product.prototype.calculateCalories = function() {
-  var calories = this.getType().calories;
-  return calories;
+  return this.getType().calories;
 }
 
 
@@ -41,19 +38,11 @@ Hamburger.prototype.getStuffing = function() {
 }
  
 Hamburger.prototype.calculatePrice = function() {
-  var price;
-  var size = this.getType().price;
-  var stuffing = this.getStuffing().price;
-  price = size + stuffing;
-  return price;
+  return this.getType().price + this.getStuffing().price;
 }
 
 Hamburger.prototype.calculateCalories = function() {
-  var calories;
-  var size = this.getType().calories;
-  var stuffing = this.getStuffing().calories;
-  calories = size + stuffing;
-  return calories;
+  return this.getType().calories + this.getStuffing().calories;
 }
 
 
@@ -73,19 +62,11 @@ Salad.prototype.getWeight = function() {
 }
 
 Salad.prototype.calculatePrice = function() {
-  var price;
-  var type = this.getType().price;
-  var weight = this.getWeight();
-  price = type * weight / 100;
-  return price;
+  return this.getType().price * this.getWeight() / 100;
 }
 
 Salad.prototype.calculateCalories = function() {
-  var calories;
-  var type = this.getType().calories;
-  var weight = this.getWeight();
-  calories = type * weight / 100;
-  return calories;
+  return this.getType().calories * this.getWeight() / 100;
 }
 
 
@@ -110,8 +91,7 @@ Order.prototype.totalOrder = function() {
   this.items.forEach(function(item) {
     order.push(item.getName());
   });
-  order = order.join(', ');
-    return order;
+  return order.join(', ');
 }
 
 Order.prototype.totalPrice = function() {
@@ -141,16 +121,14 @@ Order.prototype.addPosition = function(item) {
 }
 
 Order.prototype.deletePosition = function(item) {
-  if(!this.paid) {
-    if(this.items.includes(item)) {
-      for (var i = 0; this.items.length > i; i++) {
-    	if (this.items[i] === item) {
-          this.items.splice(i--, 1);
-          console.log("Removing position: " + item.getName());
-    	}
-      } 
-      return this.items;
-    }
+  if(!this.paid && this.items.includes(item)) {
+    for (var i = 0; this.items.length > i; i++) {
+      if (this.items[i] === item) {
+        this.items.splice(i--, 1);
+        console.log("Removing position: " + item.getName());
+      }
+    } 
+    return this.items;
   } else {
     console.log("Removing position: Sorry, your order has already been paid and can't be modified");
   }
@@ -163,17 +141,17 @@ Order.prototype.payOrder = function() {
 
 var hamburger = new Hamburger(Hamburger.SIZE_SMALL, Hamburger.STUFFING_CHEESE);
 console.log("Name: " + hamburger.getName() +
-	    " price: "    + hamburger.calculatePrice() + 
+            " price: "    + hamburger.calculatePrice() + 
             " calories: " + hamburger.calculateCalories());
 
 var ceasar = new Salad(Salad.CAESAR, 200);
 console.log("Name: " + ceasar.getName() +
-	    " price: "    + ceasar.calculatePrice() + 
+            " price: "    + ceasar.calculatePrice() + 
             " calories: " + ceasar.calculateCalories());
 
 var olivie = new Salad(Salad.OLIVIE, 150);
 console.log("Name: " + olivie.getName() +
-	    " price: "    + olivie.calculatePrice() + 
+            " price: "    + olivie.calculatePrice() + 
             " calories: " + olivie.calculateCalories());
 
 var drink = new Drink(Drink.COKE);
@@ -211,4 +189,3 @@ order.deletePosition(ceasar);
 order.addPosition(hamburger2);
 
 console.log("Your order: " + order.totalOrder());
-
