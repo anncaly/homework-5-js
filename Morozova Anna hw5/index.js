@@ -83,7 +83,6 @@ Drink.COFFEE = {name: 'Coffee', price: 80, calories: 20};
 
 function Order() {
   this.items = Array.prototype.slice.call(arguments);
-  this.paid = false;
 } 
 
 Order.prototype.totalOrder = function() {
@@ -111,7 +110,7 @@ Order.prototype.totalCalories = function() {
 }
 
 Order.prototype.addPosition = function(item) {
-  if(!this.paid) {
+  if(!Object.isFrozen(this.items)) {
     this.items.push(item);
     console.log("Adding position: " + item.getName());
     return this.items;
@@ -121,7 +120,7 @@ Order.prototype.addPosition = function(item) {
 }
 
 Order.prototype.deletePosition = function(item) {
-  if(!this.paid && this.items.includes(item)) {
+  if(!Object.isFrozen(this.items) && this.items.includes(item)) {
     for (var i = 0; this.items.length > i; i++) {
       if (this.items[i] === item) {
         this.items.splice(i--, 1);
@@ -135,7 +134,7 @@ Order.prototype.deletePosition = function(item) {
 }
 
 Order.prototype.payOrder = function() {
-  this.paid = true;
+  Object.freeze(this.items);
 }
 
 
